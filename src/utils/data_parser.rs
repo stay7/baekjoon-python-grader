@@ -1,32 +1,7 @@
+use crate::utils::file_manager;
 use scraper::{Html, Selector};
 use std::io::prelude::*;
 use std::path::Path;
-
-pub mod file_manager {
-    use std::fs;
-    use std::path::Path;
-
-    pub fn create_dir() {
-        let input_dir = Path::new("input");
-        if !input_dir.exists() {
-            fs::create_dir("input").unwrap();
-        };
-        let answer_dir = Path::new("output");
-        if !answer_dir.exists() {
-            fs::create_dir("output").unwrap();
-        }
-    }
-
-    pub fn open_file(path: &Path) -> fs::File {
-        let mut file = fs::OpenOptions::new()
-            .write(true)
-            .truncate(true)
-            .create_new(true)
-            .open(&path)
-            .unwrap();
-        file
-    }
-}
 
 pub struct DataParser {
     input_list: Vec<String>,
@@ -41,7 +16,7 @@ impl DataParser {
         }
     }
 
-    pub fn load_sample_data(&mut self, problem_no: u32) {
+    pub fn load_test_case(&mut self, problem_no: u32) {
         let url = format!("https://www.acmicpc.net/problem/{}", problem_no);
         let resp = reqwest::blocking::get(url).unwrap();
         assert!(resp.status().is_success());
@@ -62,9 +37,9 @@ impl DataParser {
         assert_eq!(self.input_list.len(), self.answer_list.len());
     }
 
-    pub fn save_sample_data(&mut self, problem_no: u32) {
+    pub fn save_test_case(&mut self, problem_no: u32) {
         if self.input_list.len() == 0 || self.answer_list.len() == 0 {
-            self.load_sample_data(problem_no);
+            self.load_test_case(problem_no);
         };
 
         for i in 0..self.input_list.len() {

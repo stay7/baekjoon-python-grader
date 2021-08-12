@@ -2,3 +2,4 @@
 *.py
 /input
 /output
+.DS_Store
