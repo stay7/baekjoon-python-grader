@@ -44,7 +44,7 @@ fn test_problem(arg: &String) {
     let problem_no = arg.parse::<u32>().expect("problem number not found!");
     let input_cases = file_manager::read_test_case_by_type(CaseType::Input, problem_no);
     let output_cases = file_manager::read_test_case_by_type(CaseType::Output, problem_no);
-    let code_path = format!("./{}.py", problem_no);
+    let code_path = format!("{}.py", problem_no);
     tester::run_test_case(Path::new(&code_path), input_cases, output_cases);
 }
 

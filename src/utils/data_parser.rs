@@ -54,5 +54,10 @@ impl DataParser {
                 .write_all(self.answer_list[i].as_bytes())
                 .unwrap();
         }
+        println!(
+            "✅ {}번 문제 테스트 케이스 {}개 저장되었습니다",
+            problem_no,
+            self.input_list.len()
+        )
     }
 }

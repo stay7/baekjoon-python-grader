@@ -3,8 +3,11 @@ use std::path::Path;
 use std::process::{Command, Stdio};
 
 pub fn run_test_case(code_path: &Path, input_case: Vec<String>, output_case: Vec<String>) {
-    let mut index = 1;
+    assert!(code_path.exists(), "파일이 존재하지 않습니다.");
+    assert!(input_case.len() > 0, "input 파일이 존재하지 않습니다.");
+    assert!(output_case.len() > 0, "output 파일이 존재하지 않습니다.");
 
+    let mut index = 1;
     for i in 0..input_case.len() {
         let mut process = Command::new("python3")
             .arg("-u")
@@ -28,14 +31,14 @@ pub fn run_test_case(code_path: &Path, input_case: Vec<String>, output_case: Vec
     }
 }
 
-fn print_result(index: u32, output: &str, answer: &str) {
-    if output == answer {
-        println!("◯◯◯◯◯◯ 예제 {}번 정답입니다! ◯◯◯◯◯◯", index);
+fn print_result(index: u32, tc_output: &str, code_output: &str) {
+    if tc_output == code_output {
+        println!("✅예제 {}번 정답입니다!✅", index);
     } else {
-        println!("✗✗✗✗✗ 예제 {}번 오답입니다! ✗✗✗✗✗", index);
+        println!("❌예제 {}번 오답입니다!❌", index);
         println!("정답: ");
-        println!("{}", output);
+        print!("{}", tc_output);
         println!("출력: ");
-        println!("{}", answer);
+        print!("{}", code_output);
     };
 }
