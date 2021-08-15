@@ -19,6 +19,7 @@ use utils::tester;
 const COMMAND_GET: &str = "get";
 const COMMAND_TEST: &str = "test";
 const COMMAND_HELP: &str = "help";
+const COMMAND_TOUCH: &str = "touch";
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -27,6 +28,7 @@ fn main() {
     match command.as_ref() {
         COMMAND_GET => get_problem(&args[2]),
         COMMAND_TEST => test_problem(&args[2]),
+        COMMAND_TOUCH => touch_code_file(&args[2]),
         COMMAND_HELP => show_help(),
         _ => show_error(),
     }
@@ -46,6 +48,11 @@ fn test_problem(arg: &String) {
     let output_cases = file_manager::read_test_case_by_type(CaseType::Output, problem_no);
     let code_path = format!("{}.py", problem_no);
     tester::run_test_case(Path::new(&code_path), input_cases, output_cases);
+}
+
+fn touch_code_file(arg: &String) {
+    let filename = format!("{}.{}", arg, "py");
+    file_manager::create_file(&filename);
 }
 
 fn show_help() {

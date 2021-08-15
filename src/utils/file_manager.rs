@@ -23,6 +23,15 @@ pub fn open_file(path: &Path) -> fs::File {
     file
 }
 
+pub fn create_file(filename: &String) {
+    let path = Path::new(filename);
+    if path.exists() {
+        println!("🚨 이미 존재하는 파일입니다.")
+    } else {
+        fs::File::create(filename).unwrap();
+    }
+}
+
 pub enum CaseType {
     Input,
     Output,
