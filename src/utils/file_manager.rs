@@ -26,9 +26,10 @@ pub fn open_file(path: &Path) -> fs::File {
 pub fn create_file(filename: &String) {
     let path = Path::new(filename);
     if path.exists() {
-        println!("🚨 이미 존재하는 파일입니다.")
+        println!("🚨 {}는 이미 존재하는 파일입니다.", filename);
     } else {
         fs::File::create(filename).unwrap();
+        println!("✅ {}파일이 생성되었습니다.", filename);
     }
 }
 
